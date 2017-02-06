@@ -1,38 +1,30 @@
 <?php
 namespace App\Controller;
-class UserController extends AppController
-{
-    var $name = "Users";
-    var $helpers = array("Html");
-    var $component = array("Session");
-    public function initialize()
+class UserController extends AppController{
+   var $name = "Users";
+   var $helpers = array("Html");
+   var $component = array("Session");
+  public function initialize()
     {
-      parent::initialize();
-      $this->loadComponent('Flash'); // Include the FlashComponent
+        parent::initialize();
+        $this->loadComponent('Flash'); // Include the FlashComponent
     }
-    // Đăng Nhập
-    public function login()
-    {
-      $error = "";
-      if($this->request->is('post'))
-      {
-        $user = $this->Auth->identify();
-        if($user)
-        {
-          $this->Auth->setUser($user);
-          return $this->redirect($this->Auth->redirectUrl());
-        }
-        else 
-        {
-          $error = 'Tên đăng nhập và mật khẩu không đúng';
-        }
+  public function login(){
+     $error="";
+    if($this->request->is('post')){
+      $user = $this->Auth->identify();
+      if($user){
+        $this->Auth->setUser($user);
+        return $this->redirect($this->Auth->redirectUrl());
       }
-      $this->set('error', $error);
+      else {
+        $error = "Tên đăng nhập và mật khẩu không đúng";
+      }
     }
-    // Đăng Xuất  
-    public function logout()
-    {
+    $this->set("error",$error);
+   }
+  public function logout(){
       $this->Session->delete('session'); //xóa session
-      $this->redirect('login'); //chuyển trang login
+      $this->redirect("login"); //chuyển trang login
     }
 }
